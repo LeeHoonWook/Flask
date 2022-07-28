@@ -27,6 +27,7 @@ User $ source 환경명/bin/activate
 * 구현한 기능
   - 메인화면 구성
   - 로그인/회원가입
+    : werkzeug로 암호화 적용
   - 블루프린트 사용
   - 
 ```
