@@ -22,6 +22,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
         "SQLALCHEMY_DATABASE_URI")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SWAGGER_UI_DOC_EXPANSION'] = 'list'
 
     if app.config['DEBUG'] == True:
         app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 1
@@ -40,6 +41,10 @@ def create_app():
     from gogglekaap.routes import base_route, auth_route
     app.register_blueprint(base_route.bp)
     app.register_blueprint(auth_route.bp)
+
+    """ === Restx Init === """
+    from .apis import blueprint as api
+    app.register_blueprint(api)
 
     """ === Error Route === """
     @app.errorhandler(404)
