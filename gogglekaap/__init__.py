@@ -2,7 +2,6 @@ from flask import Flask, render_template, g
 from flask_wtf.csrf import CSRFProtect
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-
 import os
 
 
@@ -26,6 +25,7 @@ def create_app():
 
     if app.config['DEBUG'] == True:
         app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 1
+        app.config['WTF_CSRF_ENABLED'] = False
 
     """ === DB Init === """
     db.init_app(app)
