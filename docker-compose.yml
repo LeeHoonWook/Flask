@@ -1,0 +1,45 @@
+version: '3.7'
+services:
+    gk-nginx:
+        container_name: gk-nginx
+        image: nginx
+        restart: always
+        volumes:
+            - ./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf
+            - gksocket:/tmp
+        networks:
+            - gknet
+        depends_on:
+            - gk-web
+        ports:
+            - 80:80
+    gk-web:
+        container_name: gk-web
+        image: gk-web
+        build: .
+        networks:
+            - gknet
+        ports:
+            - 8000:8000
+        volumes:
+            - ./:/var/www/gogglekaap
+            - gksocket:/tmp
+        restart: always
+        environment:
+            - FLASK_APP=gogglekaap
+            - FLASK_ENV=${FLASK_ENV:-development}
+        command: ['sh', './etc/docker-entrypoint.sh']
+
+networks:
+    gknet:
+
+volumes:
+    gksocket:
+
+# run : docker-compose up --build -d
+# down : docker-compose down
+# check : docker ps -a
+#         docker logs -tf gk-web
+
+# copy nginx.conf : docker cp gk-nginx:/etc/nginx/conf.d/default.conf ./etc/nginx
+
