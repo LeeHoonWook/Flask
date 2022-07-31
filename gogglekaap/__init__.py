@@ -2,11 +2,13 @@ from flask import Flask, render_template, g
 from flask_wtf.csrf import CSRFProtect
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-
+from dotenv import load_dotenv
 
 csrf = CSRFProtect()
 db = SQLAlchemy()
 migrate = Migrate()
+
+load_dotenv('.env')  # 배포 시 포함하여야 함
 
 
 def create_app(config=None):

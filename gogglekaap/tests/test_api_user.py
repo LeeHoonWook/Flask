@@ -6,6 +6,7 @@ def test_get_users(client):
     assert r.status_code == 200
     assert len(r.json) == 1
 
+
 def test_get_user(client, user_data):
     r = client.get(
         '/api/users/1',
